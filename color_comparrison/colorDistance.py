@@ -1,9 +1,5 @@
 import math
 
-color1 = [255,0,0,0]
-color2 = [0,255,0,0]
-color3 = [0,0,255,0]
-
 #an approximation
 def colorDistance(c1, c2):
     rmean = (c1[0]+c2[0])/2
@@ -15,5 +11,3 @@ def colorDistance(c1, c2):
     blue = int((767-rmean)*b*b) >> 8
 
     return math.sqrt(red + green + blue)
-
-print(colorDistance(color1, color2))
