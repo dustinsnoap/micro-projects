@@ -25,14 +25,24 @@ def hexTOrgba(hex):
     rgba[3] = 255
     return rgba
 
+def bgrTOrgb(bgr):
+    rgb = list()
+    rgb.append(bgr[2])
+    rgb.append(bgr[1])
+    rgb.append(bgr[0])
+    if len(bgr) == 4: rgb.append(bgr[3])
+    return rgb
+
+
 def rgbTOlab(rgb):
+    rgb = rgb[:3]
     num = 0
     RGB = [0, 0, 0]
 
-    for value in inputColor:
+    for value in rgb:
         value = float(value) / 255
         if value > 0.04045: value = ((value + 0.055) / 1.055) ** 2.4
-        else: value = value / 12.92       
+        else: value = value / 12.92
         RGB[num] = value*100
         num = num+1
     XYZ = [0, 0, 0]
@@ -64,3 +74,31 @@ def rgbTOlab(rgb):
     Lab [2] = round(b, 4)
 
     return Lab
+
+def labTOrgb(lab):
+    y = (lab[0]+16)/116
+    x = lab[1]/500 + y
+    z = y - lab[2]/200
+
+    if y**3 > 0.008856: y = y**3
+    else: y = (y-16 / 116) / 7.787
+    if x**3 > 0.008856: x = x**3
+    else: x = (x-16 / 116) / 7.787
+    if z**3 > 0.008856: z = z**3
+    else: z = (z-16 / 116) / 7.787
+
+    x = (95.047 * x) / 100
+    z = (108.883 * z) / 100
+
+    r = x * 3.2406 + y * -1.5372 + z * -.4986
+    g = x * -.9689 + y * 1.88758 + z * 0.0415
+    b = x * .0557 + y * -.204 + z * 1.057
+
+    if r > 0.0031308: r = 1.055 * r**(1/2.4) - 0.055
+    else: r = r * 12.92
+    if g > 0.0031308: g = 1.055 * g**(1/2.4) - 0.055
+    else: g = g * 12.92
+    if b > 0.0031308: b = 1.055 * b**(1/2.4) - 0.055
+    else: b = b * 12.92
+
+    return [int(r*255), int(g*255), int(b*255)]
