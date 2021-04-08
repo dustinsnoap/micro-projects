@@ -1,5 +1,6 @@
 import cv2, numpy
-from convertColor import bgrTOrgb, rgbTOlab
+from convertColor import bgrTOrgb, rgbTOlab, labTOrgb
+from imageInfo import getColors
 
 # import image
 image = cv2.imread('./test_data/avatar.png', -1)
@@ -12,23 +13,29 @@ def getSubSectionArray(arr, x_start, y_start, x_end, y_end):
         newarr.append(row[x_start:x_end])
     return newarr
 
-def getColorAverage(arr):
+def getColorAverage(arr, weights=[1,1,1,1,1], restrictColor=True):
+    #weights = [middle, top, right, bottom, left]
     l = 0
     a = 0
     b = 0
     counter = 0
-    for row in arr:
-        for col in row:
+    for ri, row in enumerate(arr):
+        row_weight = weights[0]
+        if ri == 0: row_weight = weights[1]
+        if ri == len(arr): row_weight = weights[3]
+        for ci, col in enumerate(row):
+            weight = weights[0] * row_weight
+            if ci == 0: weight = weights[4] * row_weight
+            if ci == len(arr[0]): weights[2] * row_weight
             relevance = col[3]/255 if len(col) == 4 else 1
             rgb = bgrTOrgb(col)
             lab = rgbTOlab(rgb)
-            print('b', lab[2])
-            l += relevance * lab[0]
-            a += relevance * lab[1]
-            b += relevance * lab[2]
+            l += relevance * lab[0] * weight
+            a += relevance * lab[1] * weight
+            b += relevance * lab[2] * weight
             counter += 1
     lab = [l/counter, a/counter, b/counter]
-    print('lab', lab)
+    rgb = labTOrgb(lab)
             
 
 #main function
