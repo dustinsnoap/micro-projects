@@ -7,6 +7,15 @@ def bgraTOhex(bgraColor):
     if len(b) == 1: b = '0'+b
     return r+g+b
 
+def rgbaTOhex(bgraColor):
+    r = str(hex(bgraColor[2]).split('x')[-1])
+    if len(r) == 1: r = '0'+r
+    g = str(hex(bgraColor[1]).split('x')[-1])
+    if len(g) == 1: g = '0'+g
+    b = str(hex(bgraColor[0]).split('x')[-1])
+    if len(b) == 1: b = '0'+b
+    return r+g+b
+
 def hexTObgra(hex):
     bgra = [0]*4
     if hex == '000000': return bgra
@@ -33,6 +42,13 @@ def bgrTOrgb(bgr):
     if len(bgr) == 4: rgb.append(bgr[3])
     return rgb
 
+def rgbTObgr(rgb):
+    bgr = list()
+    bgr.append(rgb[2])
+    bgr.append(rgb[1])
+    bgr.append(rgb[0])
+    if len(rgb) == 4: bgr.append(rgb[3])
+    return bgr
 
 def rgbTOlab(rgb):
     rgb = rgb[:3]

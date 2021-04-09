@@ -3,10 +3,10 @@ from colorDistance  import colorDistance
 from convertColor import bgraTOhex, hexTObgra
 
 # import image
-image = cv2.imread('./test_data/avatar.png', -1)
+image = cv2.imread('./test_data/mesmall.png', -1)
 image = numpy.array(image).tolist()
 
-p1 = cv2.imread('./test_data/p1.png', -1)
+p1 = cv2.imread('./test_data/pall.png', -1)
 p1 = numpy.array(p1).tolist()
 
 #get color palette
@@ -29,6 +29,7 @@ def findMatch(color, palette):
 
 def convertImage(image, palette):
     for ri, row in enumerate(image):
+        print(f'row: {ri} - {int(ri/len(image)*100)}%')
         for ci, col in enumerate(row):
             if col[3] == 255:
                 color = bgraTOhex(col)
@@ -41,7 +42,7 @@ def convertImage(image, palette):
 image = convertImage(image, colors)
 
 # result=cv2.imwrite(r'result.png', image)
-result = cv2.imwrite(r"100.png", numpy.asarray(image))
+result = cv2.imwrite(r"menes.png", numpy.asarray(image))
 print(result)
 
 # test = colorDistance(color1, color2)
