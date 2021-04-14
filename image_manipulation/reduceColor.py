@@ -3,7 +3,7 @@ from colorDistance  import colorDistance
 from convertColor import bgraTOhex, hexTObgra
 
 # import image
-image = cv2.imread('./test_data/mesmall.png', -1)
+image = cv2.imread('./test_data/shipwright.png', -1)
 image = numpy.array(image).tolist()
 
 p1 = cv2.imread('./test_data/pall.png', -1)
@@ -42,7 +42,7 @@ def convertImage(image, palette):
 image = convertImage(image, colors)
 
 # result=cv2.imwrite(r'result.png', image)
-result = cv2.imwrite(r"menes.png", numpy.asarray(image))
+result = cv2.imwrite(r"shipwright.png", numpy.asarray(image))
 print(result)
 
 # test = colorDistance(color1, color2)

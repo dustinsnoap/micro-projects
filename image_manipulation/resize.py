@@ -4,7 +4,7 @@ from imageInfo import getColors
 from colorDistance import colorDistance
 
 # import image
-image = cv2.imread('./test_data/me.jpg', -1)
+image = cv2.imread('./test_data/p1.jpg', -1)
 image = numpy.array(image).tolist()
 
 # helper functions
@@ -89,9 +89,3 @@ def resize(image, new_height, new_width):
         new_image.append(new_row)
         current_y += ss_height
     return new_image
-
-# ave_color = getColorAverage(image)
-# print(ave_color)
-newimg = resize(image, 240, 240)
-result = cv2.imwrite(r"mesmall.png", numpy.asarray(newimg))
-print(result)
