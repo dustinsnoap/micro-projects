@@ -1,5 +1,6 @@
 import cv2, numpy
 from resize import resize
+from convertColor import recolor
 
 def getImage(path):
     image = cv2.imread(path, -1)
@@ -21,7 +22,7 @@ def image_manipulation(args):
     #settings
     new_height = None
     new_width = None
-    recolor = None
+    colors = None
     command = None
     error = None
 
@@ -51,17 +52,20 @@ def image_manipulation(args):
                 new_width = int(args[index+2])
             except: error = 'Not a valid input'
             index += 2
-        if command == '-c' or command == '--recolor':
+        if command == '-c' or command == '--colors':
             if len(args) < index+2:
                 error = 'Missing arguments'
                 break
-            try: recolor = min(int(args[index+1]),8)
+            try: colors = min(int(args[index+1]),8)
             except:
-                if args[index+1] == 'all': recolor = 8
+                if args[index+1] == 'all': colors = 8
                 else: error = 'Not a valid input'
             index += 1
         index += 1
         if error: break
 
-    if error: print(f'Error: {error}')
-    print(f'settings: command {command} nh {new_height} nw {new_width} recolor {recolor}')
+    if error: 
+        print(f'Error: {error}')
+        return
+    if new_height or new_width: image = resize(image, new_height, new_width)
+    if colors: image = recolor(image, colors)

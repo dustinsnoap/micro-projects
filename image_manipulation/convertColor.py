@@ -18,7 +18,6 @@ def rgbaTOhex(bgraColor):
 
 def hexTObgra(hex):
     bgra = [0]*4
-    if hex == '000000': return bgra
     bgra[2] = int(hex[:2], 16)
     bgra[1] = int(hex[2:4], 16)
     bgra[0] = int(hex[4:], 16)
@@ -27,7 +26,6 @@ def hexTObgra(hex):
 
 def hexTOrgba(hex):
     rgba = [0]*4
-    if hex == '000000': return rgba
     rgba[0] = int(hex[:2], 16)
     rgba[1] = int(hex[2:4], 16)
     rgba[2] = int(hex[4:], 16)

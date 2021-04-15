@@ -56,6 +56,9 @@ def resize(image, new_height, new_width):
     old_height = len(image)
     old_width = len(image[0])
 
+    if not new_height: new_height = int(old_height * new_width / old_width)
+    if not new_width: new_width = int(old_width * new_height / old_height)
+
     #subsection sizing
     ss_height = old_height / new_height
     ss_width = old_width / new_width
@@ -64,9 +67,10 @@ def resize(image, new_height, new_width):
     current_y = 0
 
     new_image = list()
-
+    print('')
     while current_y < old_height:
-        print(f'current: {int(current_y*100)/100} - {int(100*current_y/old_height)}%')
+        print ("\033[A                             \033[A")
+        print(f'resizing image: {int(100*current_y/old_height)}%')
         new_row = list()
         current_x = 0
         while current_x < old_width:
@@ -88,4 +92,6 @@ def resize(image, new_height, new_width):
             current_x += ss_width
         new_image.append(new_row)
         current_y += ss_height
+    print ("\033[A                             \033[A")
+    print(f'resizing image: 100% --- Done')
     return new_image

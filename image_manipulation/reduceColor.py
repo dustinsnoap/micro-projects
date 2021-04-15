@@ -27,7 +27,7 @@ def findMatch(color, palette):
             match = c
     return match
 
-def convertImage(image, palette):
+def recolor(image, palette):
     for ri, row in enumerate(image):
         print(f'row: {ri} - {int(ri/len(image)*100)}%')
         for ci, col in enumerate(row):
@@ -38,11 +38,3 @@ def convertImage(image, palette):
             else:
                 image[ri][ci][3] = 0
     return image
-
-image = convertImage(image, colors)
-
-# result=cv2.imwrite(r'result.png', image)
-result = cv2.imwrite(r"shipwright.png", numpy.asarray(image))
-print(result)
-
-# test = colorDistance(color1, color2)
