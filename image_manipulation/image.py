@@ -1,6 +1,7 @@
 import cv2, numpy
 from resize import resize
-from convertColor import recolor
+from reduceColor import recolor
+from paletteMaker import createPalette
 
 def getImage(path):
     image = cv2.imread(path, -1)
@@ -9,10 +10,13 @@ def getImage(path):
 
 def image_manipulation(args):
     valid_commands = set(
-        ['-w', '--width',
-        '-h', '--height',
-        '-r', '--resize',
-        '-c', '--color'])
+        [
+            '-w', '--width',
+            '-h', '--height',
+            '-r', '--resize',
+            '-c', '--color',
+            '-p', '--palette'
+        ])
 
     image = getImage(args[0])
     if not image:
@@ -25,6 +29,7 @@ def image_manipulation(args):
     colors = None
     command = None
     error = None
+    create_palette = False
 
     index = 0
     while index < len(args):
@@ -61,11 +66,15 @@ def image_manipulation(args):
                 if args[index+1] == 'all': colors = 8
                 else: error = 'Not a valid input'
             index += 1
+        if command == '-p' or command == '--palette':
+            create_palette = True
+
         index += 1
         if error: break
 
     if error: 
         print(f'Error: {error}')
         return
+    if create_palette: createPalette(image, True)
     if new_height or new_width: image = resize(image, new_height, new_width)
     if colors: image = recolor(image, colors)

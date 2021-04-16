@@ -2,7 +2,7 @@ import cv2, numpy, math
 # from colorDistance  import colorDistance
 from convertColor import bgraTOhex, hexTObgra
 
-def createPalette(image):
+def createPalette(image, createImage=False):
     #get color palette
     colors = set()
     # colors.add('000000')
@@ -12,24 +12,21 @@ def createPalette(image):
             colors.add(color)
     colors = list(colors)
 
-    arr_size = math.ceil(math.sqrt(len(colors)))
-    palette = list()
-    filler = hexTObgra(colors[-1])
-    for _ in range(arr_size):
-        row = list()
+    #create image for palette
+    if createImage:
+        arr_size = math.ceil(math.sqrt(len(colors)))
+        palette = list()
+        filler = hexTObgra(colors[-1])
         for _ in range(arr_size):
-            if len(colors):
-                color = hexTObgra(colors.pop())
-                row.append(color)
-            else: row.append(filler)
-        palette.append(row)
+            row = list()
+            for _ in range(arr_size):
+                if len(colors):
+                    color = hexTObgra(colors.pop())
+                    row.append(color)
+                else: row.append(filler)
+            palette.append(row)
+        palette = numpy.asarray(palette)
+        result = cv2.imwrite(r"palette.png", numpy.asarray(palette))
+        if result: print('Palette Created')
 
-    return palette
-
-#TESTING
-# import image
-image = cv2.imread('./palettes/pall.png', -1)
-image = numpy.array(image).tolist()
-palette = createPalette(image)
-result = cv2.imwrite(r"palette.png", numpy.asarray(palette))
-print('done')
+    return colors

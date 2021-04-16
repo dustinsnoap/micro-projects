@@ -6,16 +6,16 @@ from convertColor import bgraTOhex, hexTObgra
 image = cv2.imread('./test_data/shipwright.png', -1)
 image = numpy.array(image).tolist()
 
-p1 = cv2.imread('./test_data/pall.png', -1)
-p1 = numpy.array(p1).tolist()
+def getColors(pnum):
+    palette = cv2.imread(f'./palettes/p{pnum}.png', -1)
+    palette = numpy.array(palette).tolist()
 
-#get color palette
-colors = set()
-colors.add('000000')
-for ri, row in enumerate(p1):
-    for ci, col in enumerate(row):
-        color = bgraTOhex(col)
-        colors.add(color)
+    colors = set()
+    for row in palette:
+        for col in row:
+            color = bgraTOhex(col)
+            colors.add(color)
+    return colors
 
 def findMatch(color, palette):
     shortest = 999999
@@ -28,6 +28,7 @@ def findMatch(color, palette):
     return match
 
 def recolor(image, palette):
+    palette = getColors(palette)
     for ri, row in enumerate(image):
         print(f'row: {ri} - {int(ri/len(image)*100)}%')
         for ci, col in enumerate(row):
