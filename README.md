@@ -19,3 +19,6 @@ To do so...
 1. Put your image in the root folder.
 2. Run the program using the commands above.
 3. Look in the results directory for your new image.
+
+Known Issues:
+-Increasing the size of the image doesn't always work as expected.
