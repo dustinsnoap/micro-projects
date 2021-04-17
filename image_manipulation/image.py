@@ -18,9 +18,10 @@ def image_manipulation(args):
             '-p', '--palette'
         ])
 
+    image_name = args[0]
     image = getImage(args[0])
     if not image:
-        print(f'No image found with name {args[0]}')
+        print(f'No image found with name {image_name}')
         return
     
     #settings
@@ -78,3 +79,6 @@ def image_manipulation(args):
     if create_palette: createPalette(image, True)
     if new_height or new_width: image = resize(image, new_height, new_width)
     if colors: image = recolor(image, colors)
+
+    cv2.imwrite(r"./results/result.png", numpy.asarray(image))
+

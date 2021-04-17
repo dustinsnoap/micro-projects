@@ -34,7 +34,7 @@ def createPalette(image, createImage=False):
                 else: row.append(filler)
             palette.append(row)
         palette = numpy.asarray(palette)
-        cv2.imwrite(r"palette.png", numpy.asarray(palette))
+        cv2.imwrite(r"./results/palette.png", numpy.asarray(palette))
         print ("\033[A                             \033[A")
         print(f'creating palette image: 100% --- DONE')
 
